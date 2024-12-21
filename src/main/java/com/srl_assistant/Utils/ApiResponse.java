@@ -1,4 +1,4 @@
-package Utils;
+package com.srl_assistant.Utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

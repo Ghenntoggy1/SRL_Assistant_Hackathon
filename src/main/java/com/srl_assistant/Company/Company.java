@@ -1,4 +1,4 @@
-package Company;
+package com.srl_assistant.Company;
 
 
 import jakarta.persistence.*;
@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import User.User;
+import com.srl_assistant.User.User;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,8 +1,8 @@
-package User;
+package com.srl_assistant.User;
 
-import Company.Company;
+import com.srl_assistant.Company.Company;
 
-import Document.Document;
+import com.srl_assistant.Document.Document;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;

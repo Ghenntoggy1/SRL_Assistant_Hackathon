@@ -1,7 +1,7 @@
-package Document;
+package com.srl_assistant.Document;
 
-import Tag.Tag;
-import User.User;
+import com.srl_assistant.Tag.Tag;
+import com.srl_assistant.User.User;
 
 import jakarta.persistence.*;
 
@@ -19,18 +19,18 @@ import lombok.NoArgsConstructor;
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "documentId")
+    @Column(name = "document_id")
     private Integer id;
 
     @Column(name = "linkMinio")
     private String linkMinio;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tagId", referencedColumnName = "tagId")
+    @JoinColumn(name = "tag_id", referencedColumnName = "tag_id")
     private Tag tag;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @Column(name = "score")

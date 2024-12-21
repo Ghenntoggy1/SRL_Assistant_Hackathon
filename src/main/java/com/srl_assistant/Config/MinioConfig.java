@@ -1,4 +1,4 @@
-package Config;
+package com.srl_assistant.Config;
 
 import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;

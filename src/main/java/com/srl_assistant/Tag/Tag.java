@@ -1,6 +1,6 @@
-package Tag;
+package com.srl_assistant.Tag;
 
-import Document.Document;
+import com.srl_assistant.Document.Document;
 
 import jakarta.persistence.*;
 
@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tagId")
+    @Column(name = "tag_id")
     private Integer id;
 
     @Column(name = "type")
     private String type;
 
-    @OneToOne(mappedBy = "Tags")
+    @OneToOne(mappedBy = "tag")
     private Document document;
 }

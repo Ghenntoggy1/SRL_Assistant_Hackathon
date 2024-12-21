@@ -1,4 +1,4 @@
-package Utils;
+package com.srl_assistant.Utils;
 
 
 public class ResponseHelper {
