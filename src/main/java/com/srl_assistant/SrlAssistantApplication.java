@@ -1,3 +1,5 @@
+package com.srl_assistant;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -5,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SrlAssistantApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(SrlAssistantApplication.class, args);
 	}
 
