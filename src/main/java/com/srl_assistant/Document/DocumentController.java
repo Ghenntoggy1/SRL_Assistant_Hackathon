@@ -32,14 +32,14 @@ public class DocumentController {
 
     @PostMapping("/validate")
     public ResponseEntity<ApiResponse<ValidationResult>> validateDocument(
-            @RequestParam("document") Integer documentId,
-            @RequestParam("tag") String tag) {
+            @RequestParam("document") Integer fileId,
+            @RequestParam("tag") String fileType) {
         try {
 
-            Document document = documentRepository.findById(documentId)
-                    .orElseThrow(() -> new IllegalArgumentException("Document not found with ID: " + documentId));
+            Document document = documentRepository.findById(fileId)
+                    .orElseThrow(() -> new IllegalArgumentException("Document not found with ID: " + fileId));
 
-            ValidationResult result = documentValidationService.validateDocument(document.getLinkMinio(), tag, documentId);
+            ValidationResult result = documentValidationService.validateDocument(document.getLinkMinio(), fileType, fileId);
 
             return ResponseEntity.ok(ResponseHelper.success(result, "Document validated successfully"));
         } catch (Exception e) {
@@ -60,9 +60,9 @@ public class DocumentController {
     }
 
 
-    @GetMapping("/{userId}/{documentId}")
-    public ResponseEntity<ApiResponse<DocumentDTO>> getDocumentById(@PathVariable Integer userId, @PathVariable Integer documentId) {
-        ApiResponse<DocumentDTO> response = documentService.getDocumentById(userId, documentId);
+    @GetMapping("/{userId}/{fileId}")
+    public ResponseEntity<ApiResponse<DocumentDTO>> getDocumentById(@PathVariable Integer userId, @PathVariable Integer fileId) {
+        ApiResponse<DocumentDTO> response = documentService.getDocumentById(userId, fileId);
         if (response.getErrorCode() == 0) {
             return ResponseEntity.ok(response);
         } else {
