@@ -10,12 +10,14 @@ import com.srl_assistant.Utils.ResponseHelper;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
+import io.minio.RemoveObjectArgs;
 import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,5 +86,48 @@ public class FileService {
                         .build()
         );    }
 
+    public ApiResponse<?> editFileWithUser(String oldFilePath, MultipartFile newFile, Integer userId) throws Exception {
+        String oldFileName = oldFilePath.substring(oldFilePath.lastIndexOf("/") + 1);
+
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(oldFileName)
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new Exception("Failed to delete the old file: " + e.getMessage());
+        }
+
+        String newFileName = UUID.randomUUID().toString() + "_" + newFile.getOriginalFilename();
+        String newFileUrl = uploadFileToMinio(newFile, newFileName);
+
+        Document document = documentRepository.findByLinkMinio(oldFilePath);
+
+        document.setName(newFileName);
+        document.setLinkMinio(newFileUrl);
+
+        if (userId != null) {
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                document.setUser(user);
+            } else {
+                throw new IllegalArgumentException("User not found for the provided user_id.");
+            }
+        }
+
+        Document updatedDocument = documentRepository.save(document);
+
+        String documentType = documentTypeDetector.detectDocumentType(updatedDocument.getLinkMinio());
+
+        return ResponseHelper.success(
+                new UploadResponse(updatedDocument.getId(), newFileUrl, documentType),
+                "File updated successfully."
+        );
+    }
+
 }
+
 

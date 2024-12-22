@@ -33,4 +33,26 @@ public class FileController {
             );
         }
     }
+
+    @PutMapping("/edit/{filePath}")
+    public ResponseEntity<ApiResponse<UploadResponse>> editFile(
+            @PathVariable("filePath") String oldFilePath,
+            @RequestParam("file") MultipartFile newFile,
+            @RequestParam("user_id") Integer userId
+    ) {
+        {
+            try {
+                ApiResponse response = fileService.editFileWithUser(oldFilePath, newFile, userId);
+                return ResponseEntity.ok(response);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body(
+                        ResponseHelper.error(e.getMessage(), 400)
+                );
+            } catch (Exception e) {
+                return ResponseEntity.status(500).body(
+                        ResponseHelper.error("An error occurred while updating the file.", 500)
+                );
+            }
+        }
+    }
 }
