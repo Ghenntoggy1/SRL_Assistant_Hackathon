@@ -22,8 +22,11 @@ public class Document {
     @Column(name = "document_id")
     private Integer id;
 
-    @Column(name = "linkMinio")
+    @Column(name = "linkMinio", length = 1000)
     private String linkMinio;
+
+    @Column(name="fileName")
+    private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tag_id", referencedColumnName = "tag_id")

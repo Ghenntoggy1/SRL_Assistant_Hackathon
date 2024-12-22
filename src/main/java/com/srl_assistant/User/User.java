@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -26,6 +23,9 @@ public class User {
     @Column(name = "user_id")
     private Integer id;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "password")
     @JsonIgnore
     private String password;
@@ -38,4 +38,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Document> documents;
+
+
 }

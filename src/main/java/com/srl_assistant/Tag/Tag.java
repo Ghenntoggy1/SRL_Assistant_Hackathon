@@ -1,7 +1,9 @@
 package com.srl_assistant.Tag;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.srl_assistant.Document.Document;
 
+import com.srl_assistant.Templates.Template;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -21,9 +23,13 @@ public class Tag {
     @Column(name = "tag_id")
     private Integer id;
 
-    @Column(name = "type")
+    @Column(name = "type", unique = true, nullable = false)
     private String type;
+
 
     @OneToOne(mappedBy = "tag")
     private Document document;
+
+    @OneToOne(mappedBy = "tag")
+    private Template template;
 }

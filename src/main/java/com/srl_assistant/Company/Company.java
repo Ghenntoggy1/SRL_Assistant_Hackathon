@@ -1,6 +1,7 @@
 package com.srl_assistant.Company;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +18,22 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
+
+    private String IDNO;
+    private String registrationCertificate;
+    private String companyName;
+    private String businessAddress;
+    private String iban;
+    private String email;
+    private String phoneNumber;
+
+    private String vatNumber;
+    private String nameReservation;
+    private Integer authorizedCapital;
 
 }
